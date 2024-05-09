@@ -57,6 +57,20 @@ app.get('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
+  if(!body.name || !body.number) {
+    return response.status(400).json({
+      error: 'name and/or number missing'
+    })
+  }
+
+  const isNameListed = persons.findIndex(p => p.name == body.name) > -1
+
+  if(isNameListed) {
+    return response.status(400).json({
+      error: 'name must be unique'
+    })
+  }
+
   const person = {
     id: generateId(),
     name: body.name,
