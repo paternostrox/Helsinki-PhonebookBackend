@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-const notes = [
+const persons = [
   { 
     "id": 1,
     "name": "Arto Hellas", 
@@ -28,18 +28,28 @@ app.get('/', (request, response) => {
   response.send('<h1>Welcome to Phonebook Backend</h1>')
 })
 
-app.get('/api/persons', (request, response) => {
-  response.json(notes)
-})
-
 app.get('/info', (request, response) => {
 
   const time = new Date()
 
   response.send(`
-    <p>Phonebook has info for ${notes.length} people</p>
+    <p>Phonebook has info for ${persons.length} people</p>
     <p>${time}</p>
   `)
+})
+
+app.get('/api/persons', (request, response) => {
+  response.json(persons)
+})
+
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const person = persons.find(p => p.id === id)
+
+  if(person)
+    response.json(person)
+  else
+    response.status(404).end()
 })
 
 const port = 3000
