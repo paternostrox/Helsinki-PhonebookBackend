@@ -1,5 +1,7 @@
+const express = require('express')
+const app = express()
 
-[
+const notes = [
   { 
     "id": 1,
     "name": "Arto Hellas", 
@@ -21,4 +23,19 @@
     "number": "39-23-6423122"
   }
 ]
+
+app.get('/', (request, response) => {
+  response.send('<h1>Welcome to Phonebook Backend</h1>')
+})
+
+app.get('/api/persons', (request, response) => {
+  response.json(notes)
+})
+
+const port = 3000
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`)
+})
+
 
