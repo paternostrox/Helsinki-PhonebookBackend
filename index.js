@@ -24,6 +24,8 @@ let persons = [
   }
 ]
 
+app.use(express.json())
+
 app.get('/', (request, response) => {
   response.send('<h1>Welcome to Phonebook Backend</h1>')
 })
@@ -52,12 +54,29 @@ app.get('/api/persons/:id', (request, response) => {
     response.status(404).end()
 })
 
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  const person = {
+    id: generateId(),
+    name: body.name,
+    number: body.number
+  }
+
+  persons = persons.concat(person)
+  response.json(person)
+})
+
 app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   persons = persons.filter(p => p.id !== id)
 
   response.status(204).end()
 })
+
+const generateId = () => {
+  return Math.floor((Math.random() * 100000000000))
+}
 
 const port = 3000
 
