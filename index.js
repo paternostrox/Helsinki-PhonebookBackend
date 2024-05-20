@@ -36,7 +36,7 @@ app.get('/', (request, response) => {
   response.send('<h1>Welcome to Phonebook Backend</h1>')
 })
 
-app.get('/info', (request, response) => {
+app.get('/api/info', (request, response) => {
 
   const time = new Date()
 
