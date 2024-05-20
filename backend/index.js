@@ -31,6 +31,7 @@ morgan.token('body', (req, res) => {
 
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
+app.use(express.static('dist'))
 
 app.get('/', (request, response) => {
   response.send('<h1>Welcome to Phonebook Backend</h1>')
